@@ -6,11 +6,18 @@ defmodule GothamTwoWeb.UserController do
 
   action_fallback GothamTwoWeb.FallbackController
 
-  def index(conn, _params) do
-    users = Api.list_users()
-    render(conn, :index, users: users)
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def index(conn, %{"email" => email, "username" => username} = _params) do
+    user = Api.get_user_by_email_and_username(email, username)
+    render(conn, :index, users: [user])
   end
 
+  # def index(conn, _params) do
+  #   users = Api.list_users()
+  #   render(conn, :index, users: users)
+  # end
+
+  @spec create(any(), map()) :: any()
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Api.create_user(user_params) do
       conn
@@ -27,7 +34,7 @@ defmodule GothamTwoWeb.UserController do
   end
 
   @spec update(any(), map()) :: any()
-  def update(conn, %{"id" => id, "user" => user_params}) do
+  def update(conn, %{"userID" => id, "user" => user_params}) do
     user = Api.get_user!(id)
 
     with {:ok, %User{} = user} <- Api.update_user(user, user_params) do
@@ -35,7 +42,7 @@ defmodule GothamTwoWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"userID" => id}) do
     user = Api.get_user!(id)
 
     with {:ok, %User{}} <- Api.delete_user(user) do

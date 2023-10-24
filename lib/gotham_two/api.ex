@@ -37,6 +37,10 @@ defmodule GothamTwo.Api do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_by_email_and_username(email, username) do
+    Repo.get_by(User, email: email, username: username)
+  end
+
   @doc """
   Creates a user.
 
@@ -115,6 +119,10 @@ defmodule GothamTwo.Api do
   """
   def list_clocks do
     Repo.all(Clock)
+  end
+
+  def get_clocks_by_user_id(id) do
+    Repo.get_by(Clock, user_id: id)
   end
 
   @doc """

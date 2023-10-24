@@ -26,10 +26,10 @@ defmodule GothamTwoWeb.Router do
 
     resources "/users", UserController, param: "userID", except: [:new, :edit]
 
-    resources "/workingtimes/:userId", WorkingtimesController, only: [:index, :create, :show]
+    resources "/workingtimes/:userID", WorkingtimesController, only: [:index, :create, :show]
     resources "/workingtimes", WorkingtimesController, only: [:delete, :update]
 
-    resources "/clocks/:userId", ClockController, only: [:index, :create]
+    resources "/clocks/:userID", ClockController, only: [:index, :create]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

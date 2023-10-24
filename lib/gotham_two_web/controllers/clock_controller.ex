@@ -6,19 +6,22 @@ defmodule GothamTwoWeb.ClockController do
 
   action_fallback GothamTwoWeb.FallbackController
 
-  def index(conn, _params) do
-    clocks = Api.list_clocks()
+  def index(conn, %{"userID" => id} = _params) do
+    clocks = Api.get_clocks_by_user_id(id)
     render(conn, :index, clocks: clocks)
   end
 
-  def create(conn, %{"clock" => clock_params}) do
-    with {:ok, %Clock{} = clock} <- Api.create_clock(clock_params) do
+  def create(conn, %{"clock" => clock_params, "userID" => user_id}) do
+    clock_params_with_user = Map.put(clock_params, "user_id", user_id)
+
+    with {:ok, %Clock{} = clock} <- Api.create_clock(clock_params_with_user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/clocks/#{clock}")
       |> render(:show, clock: clock)
     end
   end
+
 
   def show(conn, %{"id" => id}) do
     clock = Api.get_clock!(id)
