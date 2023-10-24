@@ -26,8 +26,8 @@ defmodule GothamTwoWeb.Router do
 
     resources "/users", UserController, param: "userID", except: [:new, :edit]
 
-    resources "/workingtimes/:userId", WorkingTimeController, only: [:index, :create, :show]
-    resources "/workingtimes", WorkingTimeController, only: [:delete, :update]
+    resources "/workingtimes/:userId", WorkingtimesController, only: [:index, :create, :show]
+    resources "/workingtimes", WorkingtimesController, only: [:delete, :update]
 
     resources "/clocks/:userId", ClockController, only: [:index, :create]
   end
