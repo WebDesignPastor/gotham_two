@@ -20,11 +20,13 @@ defmodule GothamTwoWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  def show(conn, %{"userID" => id}) do
     user = Api.get_user!(id)
     render(conn, :show, user: user)
   end
 
+  @spec update(any(), map()) :: any()
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Api.get_user!(id)
 
