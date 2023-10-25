@@ -27,8 +27,8 @@ defmodule GothamTwoWeb.WorkingtimesController do
     end
   end
 
-  def show(conn, %{"userID" => _user_id, "id" => id}) do
-    workingtimes = Api.get_workingtimes!(id)
+  def show(conn, %{"userID" => user_id, "id" => id}) do
+    workingtimes = Api.get_workingtimes_per_user_id_and_id(user_id, id)
     render(conn, :show, workingtimes: workingtimes)
   end
 

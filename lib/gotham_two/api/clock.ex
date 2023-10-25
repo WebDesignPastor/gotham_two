@@ -3,7 +3,7 @@ defmodule GothamTwo.Api.Clock do
   import Ecto.Changeset
 
   schema "clocks" do
-    field :status, :boolean, default: false
+    field :status, :boolean, default: true
     field :time, :naive_datetime
     field :user_id, :id
 

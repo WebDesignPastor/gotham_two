@@ -249,6 +249,14 @@ defmodule GothamTwo.Api do
   """
   def get_workingtimes!(id), do: Repo.get!(Workingtimes, id)
 
+  def  get_workingtimes_per_user_id_and_id(user_id, id) do
+    Repo.get_by(Workingtimes, user_id: user_id, id: id)
+  end
+
+  @spec create_workingtimes(
+          any(),
+          :invalid | %{optional(:__struct__) => none(), optional(atom() | binary()) => any()}
+        ) :: any()
   @doc """
   Creates a workingtimes.
 
