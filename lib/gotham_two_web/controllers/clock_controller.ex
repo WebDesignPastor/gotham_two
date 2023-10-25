@@ -11,17 +11,16 @@ defmodule GothamTwoWeb.ClockController do
     render(conn, :index, clocks: clocks)
   end
 
-  @spec create(any(), map()) :: any()
   def create(conn, %{"clock" => clock_params, "userID" => user_id}) do
     clock_params_with_user = Map.put(clock_params, "user_id", user_id)
 
     with {:ok, %Clock{} = clock} <- Api.create_clock(clock_params_with_user) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/clocks/#{clock}")
+      |> put_resp_header("location", ~p"/api/clocks/#{clock.id}") # Modified this line to get the ID of the clock
       |> render(:show, clock: clock)
     end
-  end
+end
 
 
   def show(conn, %{"id" => id}) do

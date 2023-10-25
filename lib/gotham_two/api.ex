@@ -122,8 +122,10 @@ defmodule GothamTwo.Api do
   end
 
   def get_clocks_by_user_id(id) do
-    Repo.get_by(Clock, user_id: id)
+    from(c in Clock, where: c.user_id == ^id)
+    |> Repo.all()
   end
+
 
   @doc """
   Gets a single clock.
