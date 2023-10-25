@@ -223,6 +223,16 @@ defmodule GothamTwo.Api do
     Repo.all(Workingtimes)
   end
 
+  def get_working_time_by_user_start_and_end(user, start_time, end_time) do
+    from(wt in Workingtimes,
+    where: wt.user_id == ^user and
+    wt.start >= ^start_time and
+    wt.end <= ^end_time
+    )
+    |> Repo.all()
+  end
+
+
   @doc """
   Gets a single workingtimes.
 
@@ -251,8 +261,8 @@ defmodule GothamTwo.Api do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtimes(attrs \\ %{}) do
-    %Workingtimes{}
+  def create_workingtimes(user_id, attrs \\ %{}) do
+    %Workingtimes{user_id: user_id}
     |> Workingtimes.changeset(attrs)
     |> Repo.insert()
   end
